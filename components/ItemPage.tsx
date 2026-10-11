@@ -8,7 +8,9 @@ import { SITE, OG_BASE } from "@/lib/site";
 
 export function itemMetadata(item: Item): Metadata {
   const c = getContent(item.key);
-  const title = `${item.title} (Free PDF)`;
+  const full = `${item.title} (Free PDF)`;
+  // Keep "<title> | Brand" within ~60 characters so Google shows it in full.
+  const title = `${full} | ${SITE.name}`.length > 60 ? item.title : full;
   return { title, description: c.meta, alternates: { canonical: item.path }, openGraph: { ...OG_BASE, title: `${title} | ${SITE.name}`, description: c.meta, url: item.path } };
 }
 
